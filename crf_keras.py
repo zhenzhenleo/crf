@@ -36,7 +36,7 @@ class CRF(Layer):
         trans = K.expand_dims(self.trans, 0)  # 转移概率矩阵，(1, output_dim, output_dim)
         outputs = K.logsumexp(states + trans, 1)  # (batch_size, output_dim)
         outputs = outputs + inputs
-        outputs = mask * outputs + (1 - mask) * states[:, :, 0]  # 如果mask为1则直接拿前一时刻的得分
+        outputs = mask * outputs + (1 - mask) * states[:, :, 0]  # 如果mask为0则直接拿前一时刻的得分
         return outputs, [outputs]
 
     def path_score(self, inputs, labels):
